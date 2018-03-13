@@ -76,9 +76,9 @@ def getpunch(request, cur_date=None):
                 else:
                     print('this user %s was deleted!' % item["user_id"])
         else:
+            punch = dict()
             punch['user_id'] = user
             punch['create_date'] = cur_date
             punch['nowork_status'] = True
-            p = Punch.objects.create(**punch)
-            p.save()
+            Punch.objects.update_or_create(**punch)
     return Response(queryset)
