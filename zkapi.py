@@ -23,11 +23,16 @@ class ZKAPI(object):
         获取所有签到数据
         :return:
             True， 有数据，
-            1，EnrollNumber/用户编号
-            '***', Password/用户密码
-            'aaa',Name/用户姓名
-            '114',卡号
-            True，Enabled/用户启用
+            u'x' , 用户id
+            1，EnrollNumber
+            255,verifymode
+            2015, 年份
+            12，月份
+            21，日期
+            16， 时
+            14，分
+            37，秒
+            0，备用码
         """
         if self.zk.ReadGeneralLogData(self.m_id):
             alldatas = []
@@ -52,16 +57,11 @@ class ZKAPI(object):
         读取所有的用户信息
         :return:
             True， 有数据，
-            u'x' , 用户id
-            1，EnrollNumber
-            255,verifymode
-            2015, 年份
-            12，月份
-            21，日期
-            16， 时
-            14，分
-            37，秒
-            0，备用码
+            1，EnrollNumber/用户编号
+            '***', Password/用户密码
+            'aaa',Name/用户姓名
+            '114',卡号
+            True，Enabled/用户启用
         """
         if self.zk.GetAllUserInfo(self.m_id):
             alldatas = []
