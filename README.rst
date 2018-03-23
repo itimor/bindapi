@@ -1,1 +1,1 @@
-# 中考勤机iFace 702 api
+# 中控考勤机iFace 702 api
