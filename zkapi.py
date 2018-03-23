@@ -80,7 +80,20 @@ class ZKAPI(object):
                     break
             return alldatas
 
+    def getUserInfo(self, user_id):
+        """
+        读取所有的用户信息
+        :return:
+            True， 有数据，
+            'aaa',Name/用户姓名
+            '***', Password/用户密码
+            '114',卡号
+            True，Enabled/用户启用
+        """
+        data = self.zk.SSR_GetUserInfo(self.m_id, user_id)
+        return data
+
 
 if __name__ == '__main__':
     zkapi = ZKAPI(m_id, zk)
-    print(zkapi.getAllUserInfo())
+    print(zkapi.getUserInfo(1002))
