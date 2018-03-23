@@ -7,10 +7,7 @@ from zkconf import ZK_INFO
 
 m_id = 2
 zk = Dispatch("zkemkeeper.ZKEM")
-
-if not zk.Connect_Net(ZK_INFO['HOST'], ZK_INFO['PORT']):
-    print("考勤机连接错误")
-    sys.exit(1)
+zk.Connect_Net(ZK_INFO['HOST'], ZK_INFO['PORT'])
 
 zk.RegEvent(m_id, 65535)
 
