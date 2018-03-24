@@ -3,6 +3,7 @@
 
 from win32com.client import Dispatch
 from zkconf import ZK_INFO
+from datetime import datetime
 
 # 设置信息
 m_id = 2
@@ -34,12 +35,14 @@ class ZKAPI(object):
             while True:
                 data = self.zk.SSR_GetGeneralLogData(self.m_id)
                 rdata = dict()
-                if data[0]:
-                    rdata['user_id'] = data[1]
-                    rdata['verifymode'] = data[2]
-                    rdata['create_time'] = '{}-{}-{} {}:{}:{}'.format(data[4], data[5], data[6], data[7], data[8],
-                                                                      data[9])
-                    alldatas.append(rdata)
+                if data[0] and data[4]:
+                    cur_date = datetime.now().strftime('%Y-%m-%d')
+                    create_date = datetime(data[4], data[5], data[6]).strftime('%Y-%m-%d')
+                    if cur_date == create_date:
+                        rdata['user_id'] = data[1]
+                        rdata['verifymode'] = data[2]
+                        rdata['create_time'] = '{} {}:{}:{}'.format(create_date, data[7], data[8], data[9])
+                        alldatas.append(rdata)
                 else:
                     break
             return alldatas
@@ -74,5 +77,5 @@ class ZKAPI(object):
 
 if __name__ == '__main__':
     zkapi = ZKAPI(m_id, zk)
-    print(zkapi.getAllUserInfo())
+    print(zkapi.getReadAllGLogData())
     zk.Disconnect()
