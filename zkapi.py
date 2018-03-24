@@ -23,15 +23,10 @@ class ZKAPI(object):
         获取所有签到数据
         :return:
             True， 有数据，
-            u'x' , 用户id
             1，EnrollNumber
-            255,verifymode
-            2015, 年份
-            12，月份
-            21，日期
-            16， 时
-            14，分
-            37，秒
+            1,verifymode/0 为密码验证，1 为指纹验证，2 为卡验证
+            255, 未知
+            2015, 年份/ 12，月份/ 21，日期/ 16， 时/ 14，分/ 37，秒
             0，备用码
         """
         if self.zk.ReadGeneralLogData(self.m_id):
@@ -40,12 +35,10 @@ class ZKAPI(object):
                 data = self.zk.SSR_GetGeneralLogData(self.m_id)
                 rdata = dict()
                 if data[0]:
-                    rdata['user_id'] = data[1]
-                    rdata['EnrollNumber'] = data[2]
-                    rdata['verifymode'] = data[3]
+                    rdata['EnrollNumber'] = data[1]
+                    rdata['verifymode'] = data[2]
                     rdata['create_time'] = '{}-{}-{} {}:{}:{}'.format(data[4], data[5], data[6], data[7], data[8],
                                                                       data[9])
-                    rdata['desc'] = data[10]
                     alldatas.append(rdata)
                 else:
                     break
@@ -80,5 +73,5 @@ class ZKAPI(object):
 
 if __name__ == '__main__':
     zkapi = ZKAPI(m_id, zk)
-    print(zkapi.getAllUserInfo())
+    print(zkapi.getReadAllGLogData())
     zk.Disconnect()
