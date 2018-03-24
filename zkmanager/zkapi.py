@@ -1,17 +1,9 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from win32com.client import Dispatch
-from zkconf import ZK_INFO
+from zkapi.settings import zk
+from zkapi.settings import zk_m_id as m_id
 from datetime import datetime
-
-# 设置信息
-m_id = 2
-zk = Dispatch("zkemkeeper.ZKEM")
-zk.Connect_Net(ZK_INFO['HOST'], ZK_INFO['PORT'])
-
-# 注册全部实时事件
-zk.RegEvent(m_id, 65535)
 
 
 class ZKAPI(object):
@@ -77,5 +69,5 @@ class ZKAPI(object):
 
 if __name__ == '__main__':
     zkapi = ZKAPI(m_id, zk)
-    print(zkapi.getReadAllGLogData())
+    print(zkapi.getAllUserInfo())
     zk.Disconnect()
