@@ -3,7 +3,7 @@
 
 from zkapi.settings import zk
 from zkapi.settings import zk_m_id as m_id
-from datetime import datetime
+from datetime import datetime, date, time
 
 
 def getReadAllGLogData():
@@ -24,11 +24,15 @@ def getReadAllGLogData():
             rdata = dict()
             if data[0] and data[4]:
                 cur_date = datetime.now().strftime('%Y-%m-%d')
-                create_date = datetime(data[4], data[5], data[6]).strftime('%Y-%m-%d')
+                create_datetime = datetime(data[4], data[5], data[6], data[7], data[8], data[9])
+                create_date = date(data[4], data[5], data[6]).strftime('%Y-%m-%d')
+                create_time = time(data[7], data[8], data[9])
                 if cur_date == create_date:
                     rdata['user_id'] = data[1]
                     rdata['verifymode'] = data[2]
-                    rdata['create_time'] = '{} {}:{}:{}'.format(create_date, data[7], data[8], data[9])
+                    rdata['create_datetime'] = create_datetime
+                    rdata['create_date'] = create_date
+                    rdata['create_time'] = create_time
                     alldatas.append(rdata)
             else:
                 break

@@ -16,7 +16,9 @@ class PunchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Punch
-        fields = ('url', 'id', 'user', 'verifymode', 'status', 'create_time', 'create_date')
+        fields = (
+            'url', 'id', 'user', 'verifymode', 'status', 'create_datetime', 'create_date', 'swork_time',
+            'ework_time', 'swork_timec', 'ework_timec', 'work_time')
 
 
 class PunchSetSerializer(serializers.ModelSerializer):

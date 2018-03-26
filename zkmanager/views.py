@@ -41,16 +41,21 @@ def getpunch(request):
     punchset = PunchSet.objects.all()[0]
     for item in queryset:
         if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
+            item['swork_time'] = item['create_time']
             if item['create_time'] > punchset.swork_time:
+                item['swork_timec'] = item['create_time'] - punchset.swork_time
                 item['status'] = 3
             else:
                 item['status'] = 1
         elif punchset.ework_stime < item['create_time'] < punchset.ework_etime:
+            item['ework_time'] = item['create_time']
             if item['create_time'] < punchset.ework_time:
+                item['ework_timec'] = item['create_time'] - punchset.swork_time
                 item['status'] = 4
             else:
                 item['status'] = 2
         else:
             item['status'] = 0
-        Punch.objects.update_or_create(**item)
+        del item['create_time']
+        Punch.objects.update_or_create(user_id=item['user_id'], create_date=item['create_date'], defaults=item)
     return Response(queryset)

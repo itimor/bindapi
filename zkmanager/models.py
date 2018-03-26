@@ -17,7 +17,7 @@ class ZkUser(models.Model):
 
 
 Punch_Status = {
-    0: '无效',
+    0: '旷工',
     1: '签到',
     2: '签退',
     3: '迟到',
@@ -29,8 +29,18 @@ class Punch(models.Model):
     user = models.ForeignKey('ZkUser', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u"用户")
     verifymode = models.CharField(max_length=30, default=1, verbose_name=u"打卡模式")
     status = models.CharField(max_length=1, choices=Punch_Status.items(), default=0, verbose_name=u'打卡状态')
-    create_time = models.DateTimeField(default=timezone.now, verbose_name=u'打卡时间')
+    create_datetime = models.DateTimeField(default=timezone.now, verbose_name=u'打卡日期时间')
     create_date = models.DateField(default=timezone.now, verbose_name=u'打卡日期')
+    swork_time = models.TimeField(null=True, blank=True, verbose_name=u'签到时间')
+    ework_time = models.TimeField(null=True, blank=True, verbose_name=u'签退时间')
+    swork_timec = models.TimeField(null=True, blank=True, verbose_name=u'迟到时间')
+    ework_timec = models.TimeField(null=True, blank=True, verbose_name=u'早退时间')
+    work_time = models.TimeField(null=True, blank=True, verbose_name=u'实际工作时间')
+
+    def save(self, *args, **kwargs):
+        if self.swork_time and self.ework_time:
+            self.work_time = self.ework_time - self.swork_time
+        super(Punch, self).save(*args, **kwargs)
 
 
 class PunchSet(models.Model):
