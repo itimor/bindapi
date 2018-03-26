@@ -60,7 +60,6 @@ def getAllUserInfo():
                 alldatas.append(rdata)
             else:
                 break
-        print(alldatas)
         return alldatas
 
 

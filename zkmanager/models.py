@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 class ZkUser(models.Model):
-    user_id = models.IntegerField(primary_key=True, verbose_name=u"用户号")
+    user_id = models.IntegerField(primary_key=True, unique=True, verbose_name=u"用户号")
     username = models.CharField(max_length=30, verbose_name=u"用户名")
     password = models.CharField(max_length=30, null=True, blank=True, verbose_name=u"密码")
     role = models.CharField(max_length=30, default=0, verbose_name=u"身份")
