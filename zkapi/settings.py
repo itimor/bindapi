@@ -132,7 +132,7 @@ zk.RegEvent(zk_m_id, 65535)
 # 设置定时任务
 CRONJOBS = [
     # 初级模式
-    ('0 12 * * *', 'zkapi.zkmanager.zkapi.zkapi.getAllUserInfo'),
+    ('0 12 * * *', 'zkapi.zkmanager.zkapi.getAllUserInfo'),
 
     # 中级模式
     # ('0   0 1 * *', 'myproject.myapp.cron.my_scheduled_job', '> /tmp/last_scheduled_job.log'),
