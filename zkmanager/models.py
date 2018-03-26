@@ -16,7 +16,7 @@ class ZkUser(models.Model):
         return self.username
 
 
-Punch_Status = {
+PunchStatus = {
     0: '旷工',
     1: '签到',
     2: '签退',
@@ -28,7 +28,7 @@ Punch_Status = {
 class Punch(models.Model):
     user = models.ForeignKey('ZkUser', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u"用户")
     verifymode = models.CharField(max_length=30, default=1, verbose_name=u"打卡模式")
-    status = models.CharField(max_length=1, choices=Punch_Status.items(), default=0, verbose_name=u'打卡状态')
+    status = models.CharField(max_length=3, choices=PunchStatus.items(), default=0, verbose_name=u'打卡状态')
     create_datetime = models.DateTimeField(default=timezone.now, verbose_name=u'打卡日期时间')
     create_date = models.DateField(default=timezone.now, verbose_name=u'打卡日期')
     swork_time = models.TimeField(null=True, blank=True, verbose_name=u'签到时间')

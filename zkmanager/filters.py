@@ -11,4 +11,4 @@ class PunchFilter(filters.FilterSet):
 
     class Meta:
         model = Punch
-        fields = ['user__username', 'create_date']
+        fields = ['create_date']

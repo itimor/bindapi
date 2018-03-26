@@ -13,13 +13,14 @@ from zkmanager.filters import PunchFilter
 class ZkUserViewSet(viewsets.ModelViewSet):
     queryset = ZkUser.objects.all()
     serializer_class = ZkUserSerializer
-    filter_fields = ['user_id', 'username']
+    search_fields = ['user_id', 'username']
 
 
 class PunchViewSet(viewsets.ModelViewSet):
     queryset = Punch.objects.all()
     serializer_class = PunchSerializer
     filter_class = PunchFilter
+    search_fields = ['user__username']
 
 
 class PunchSetViewSet(viewsets.ModelViewSet):
