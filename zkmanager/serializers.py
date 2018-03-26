@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # author: kiven
 
-from .models import ZkUser, Punch
+from .models import ZkUser, Punch, PunchSet
 from rest_framework import serializers
 
 
@@ -16,4 +16,10 @@ class PunchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Punch
-        fields = ('url', 'id', 'user', 'verifymode', 'create_time', 'create_date')
+        fields = ('url', 'id', 'user', 'verifymode', 'status', 'create_time', 'create_date')
+
+
+class PunchSetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PunchSet
+        fields = ('url', 'id', 'swork_time', 'ework_time', 'swork_stime', 'swork_etime', 'ework_stime', 'ework_etime')
