@@ -95,7 +95,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-REST_USE_JWT = True
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_PERMISSION_CLASSES': (
@@ -112,6 +111,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 from win32com.client import Dispatch
 

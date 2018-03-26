@@ -8,4 +8,4 @@ router = DefaultRouter()
 from zkmanager.views import ZkUserViewSet, PunchViewSet
 
 router.register(r'zkusers', ZkUserViewSet)
-router.register(r'punchs', PunchViewSet)
+router.register(r'zkpunchs', PunchViewSet)

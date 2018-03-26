@@ -7,6 +7,7 @@ from zkmanager.serializers import ZkUserSerializer, PunchSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .zkapi import getAllUserInfo, getReadAllGLogData
+from .filters import PunchFilter
 
 
 class ZkUserViewSet(viewsets.ModelViewSet):
@@ -18,7 +19,7 @@ class ZkUserViewSet(viewsets.ModelViewSet):
 class PunchViewSet(viewsets.ModelViewSet):
     queryset = Punch.objects.all()
     serializer_class = PunchSerializer
-    filter_fields = ['user__username']
+    filter_class = PunchFilter
 
 
 @api_view()

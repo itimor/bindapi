@@ -20,3 +20,4 @@ class Punch(models.Model):
     user = models.ForeignKey('ZkUser', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u"用户")
     verifymode = models.CharField(max_length=30, default=1, verbose_name=u"打卡模式")
     create_time = models.DateTimeField(default=timezone.now, verbose_name=u'打卡时间')
+    create_date = models.DateField(default=timezone.now, verbose_name=u'打卡日期')
