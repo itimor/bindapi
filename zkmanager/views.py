@@ -2,12 +2,17 @@
 # author: kiven
 
 from rest_framework import viewsets
-from zkmanager.serializers import UserSerializer
-from django.contrib.auth.models import User
+from .models import ZkUser, Punch
+from zkmanager.serializers import ZkUserSerializer, PunchSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    search_fields = ['username']
-    filter_fields = ['id']
+class ZkUserViewSet(viewsets.ModelViewSet):
+    queryset = ZkUser.objects.all()
+    serializer_class = ZkUserSerializer
+    filter_fields = ['user_id', 'username']
+
+
+class PunchViewSet(viewsets.ModelViewSet):
+    queryset = Punch.objects.all()
+    serializer_class = PunchSerializer
+    filter_fields = ['user__username']

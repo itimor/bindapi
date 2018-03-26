@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 
-from zkmanager.views import UserViewSet
+from zkmanager.views import ZkUserViewSet, PunchViewSet
 
-router.register(r'users', UserViewSet)
+router.register(r'zkusers', ZkUserViewSet)
+router.register(r'punchs', PunchViewSet)

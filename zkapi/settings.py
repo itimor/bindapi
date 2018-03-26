@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',  # 过滤
     'corsheaders',  # 跨域
+    'django_crontab',  # 定时任务
     'zkmanager',
 ]
 
@@ -127,3 +128,12 @@ zk.Connect_Net(ZK_INFO['HOST'], ZK_INFO['PORT'])
 
 # 注册全部实时事件
 zk.RegEvent(zk_m_id, 65535)
+
+# 设置定时任务
+CRONJOBS = [
+    # 初级模式
+    ('0 12 * * *', 'zkapi.zkmanager.zkapi.zkapi.getAllUserInfo'),
+
+    # 中级模式
+    # ('0   0 1 * *', 'myproject.myapp.cron.my_scheduled_job', '> /tmp/last_scheduled_job.log'),
+]

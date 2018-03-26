@@ -1,4 +1,5 @@
 Django==2.0.3
 django-cors-headers==2.2.0
+django-crontab-0.7.1
 django-filter==1.1.0
 djangorestframework==3.7.7

@@ -59,7 +59,7 @@ class ZKAPI(object):
                     rdata['user_id'] = data[1]
                     rdata['username'] = data[2]
                     rdata['password'] = data[3]
-                    rdata['card_id'] = data[4]
+                    rdata['role'] = data[4]
                     rdata['is_active'] = data[5]
                     alldatas.append(rdata)
                 else:
