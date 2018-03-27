@@ -41,9 +41,6 @@ class Punch(models.Model):
     def save(self, *args, **kwargs):
         if self.swork_time and self.ework_time:
             self.work_time = self.ework_time - self.swork_time
-
-        if not self.swork_time and not self.ework_time:
-            self.status = 0
         super(Punch, self).save(*args, **kwargs)
 
 

@@ -49,7 +49,7 @@ def getpunch(request):
     for user in zkusers:
         if str(user.user_id) in punchusers:
             for item in queryset:
-                punch['ework_timec'] = punch['swork_timec'] = '00:00:00'
+                punch['ework_timec'] = punch['swork_timec'] = None
                 if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
