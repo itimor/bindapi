@@ -17,13 +17,13 @@ class ZkUser(models.Model):
 
 
 SworkStatus = {
-    0: '正常',
+    0: '已签到',
     1: '迟到',
     2: '未签到'
 }
 
 EworkStatus = {
-    0: '正常',
+    0: '已签退',
     1: '早退',
     2: '未签退',
 }
