@@ -39,8 +39,9 @@ class Punch(models.Model):
     work_time = models.TimeField(null=True, blank=True, verbose_name=u'实际工作时间')
 
     def save(self, *args, **kwargs):
+        from zkmanager.utils import diff_times_in_seconds
         if self.swork_time and self.ework_time:
-            self.work_time = self.ework_time - self.swork_time
+            self.work_time = diff_times_in_seconds(self.swork_time, self.ework_time)
         super(Punch, self).save(*args, **kwargs)
 
 
