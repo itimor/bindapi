@@ -54,16 +54,16 @@ def getpunch(request):
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
                         punch['swork_timec'] = diff_times_in_seconds(punchset.swork_time, item['create_time'])
-                        punch['swork_status'] = False
+                        punch['swork_status'] = 1
                     else:
-                        punch['swork_status'] = True
+                        punch['swork_status'] = 0
                 elif punchset.ework_stime < item['create_time'] < punchset.ework_etime:
                     punch['ework_time'] = item['create_time']
                     if item['create_time'] < punchset.ework_time:
                         punch['ework_timec'] = diff_times_in_seconds(item['create_time'], punchset.swork_time)
-                        punch['ework_status'] = False
+                        punch['ework_status'] = 1
                     else:
-                        punch['ework_status'] = True
+                        punch['ework_status'] = 0
                 Punch.objects.update_or_create(user_id=item['user_id'], create_date=item['create_date'], defaults=punch)
         else:
             punch['user_id'] = user.user_id

@@ -16,20 +16,24 @@ class ZkUser(models.Model):
         return self.username
 
 
-PunchStatus = {
-    0: '旷工',
-    1: '签到',
-    2: '签退',
-    3: '迟到',
-    4: '早退'
+SworkStatus = {
+    0: '正常',
+    1: '迟到',
+    2: '未签到'
+}
+
+EworkStatus = {
+    0: '正常',
+    1: '早退',
+    2: '未签到',
 }
 
 
 class Punch(models.Model):
     user = models.ForeignKey('ZkUser', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u"用户")
     verifymode = models.CharField(max_length=30, default=1, verbose_name=u"打卡模式")
-    swork_status = models.BooleanField(default=True, verbose_name=u'签到状态')
-    ework_status = models.BooleanField(default=True, verbose_name=u'签退状态')
+    swork_status = models.CharField(max_length=3, choices=SworkStatus.items(), default=2, verbose_name=u'签到状态')
+    ework_status = models.CharField(max_length=3, choices=EworkStatus.items(), default=2, verbose_name=u'签退状态')
     nowork_status = models.BooleanField(default=False, verbose_name=u'旷工状态')
     create_date = models.DateField(default=timezone.now, verbose_name=u'打卡日期')
     swork_time = models.TimeField(null=True, blank=True, verbose_name=u'签到时间')
@@ -42,6 +46,12 @@ class Punch(models.Model):
         from zkmanager.utils import diff_times_in_seconds
         if self.swork_time and self.ework_time:
             self.work_time = diff_times_in_seconds(self.swork_time, self.ework_time)
+
+        if not self.swork_time:
+            self.swork_status = 2
+
+        if not self.ework_time:
+            self.ework_status = 2
         super(Punch, self).save(*args, **kwargs)
 
 
