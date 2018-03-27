@@ -55,8 +55,6 @@ def getpunch(request):
                 item['status'] = 4
             else:
                 item['status'] = 2
-        else:
-            item['status'] = 0
         del item['create_time']
         Punch.objects.update_or_create(user_id=item['user_id'], create_date=item['create_date'], defaults=item)
     return Response(queryset)
