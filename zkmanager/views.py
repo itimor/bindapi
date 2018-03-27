@@ -44,7 +44,6 @@ def getpunch(request):
     punchusers = []
     for i in queryset:
         punchusers.append(i["user_id"])
-    print(punchusers)
     zkusers = ZkUser.objects.all()
     punch = dict()
     for user in zkusers:
