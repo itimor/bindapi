@@ -52,6 +52,7 @@ def getpunch(request, cur_date):
                 punch = dict()
                 punch['name'] = '{}-{}'.format(item["user_id"], cur_date)
                 punch['user_id'] = item["user_id"]
+                punch['cur_date'] = cur_date
                 if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
