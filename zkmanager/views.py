@@ -39,8 +39,10 @@ def getzkuser(request):
 
 
 @api_view()
-def getpunch(request, cur_date):
+def getpunch(request, cur_date=None):
     punchset = PunchSet.objects.all()[0]
+    if not cur_date:
+        cur_date = datetime.now().strftime('%Y-%m-%d')
     queryset = getReadAllGLogData(cur_date)
     punchusers = []
     for i in queryset:
@@ -52,7 +54,7 @@ def getpunch(request, cur_date):
                 punch = dict()
                 punch['name'] = '{}-{}'.format(item["user_id"], cur_date)
                 punch['user_id'] = item["user_id"]
-                punch['cur_date'] = cur_date
+                punch['create_date'] = datetime.strptime(cur_date, '%Y-%m-%d')
                 if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
