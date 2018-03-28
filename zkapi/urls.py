@@ -9,5 +9,5 @@ from zkmanager.views import getpunch
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/getzkuser/', getzkuser, name="getzkuser"),
-    url(r'^api/getpunch/', getpunch, name="getpunch"),
+    url(r'^api/getpunch/(?P<cur_date>\S+)/', getpunch, name="getpunch"),
 ]

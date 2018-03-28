@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from zkmanager.zkapi import getAllUserInfo, getReadAllGLogData
 from zkmanager.filters import PunchFilter
 from zkmanager.utils import diff_times_in_seconds
+from datetime import datetime
 
 
 class ZkUserViewSet(viewsets.ModelViewSet):
@@ -38,18 +39,19 @@ def getzkuser(request):
 
 
 @api_view()
-def getpunch(request):
+def getpunch(request, cur_date):
     punchset = PunchSet.objects.all()[0]
-    queryset = getReadAllGLogData()
+    queryset = getReadAllGLogData(cur_date)
     punchusers = []
     for i in queryset:
         punchusers.append(i["user_id"])
     zkusers = ZkUser.objects.all()
-    punch = dict()
     for user in zkusers:
         if str(user.user_id) in punchusers:
             for item in queryset:
-                punch['ework_timec'] = punch['swork_timec'] = None
+                punch = dict()
+                punch['name'] = '{}-{}'.format(item["user_id"], cur_date)
+                punch['user_id'] = item["user_id"]
                 if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
@@ -57,6 +59,7 @@ def getpunch(request):
                         punch['swork_status'] = 1
                     else:
                         punch['swork_status'] = 0
+
                 elif punchset.ework_stime < item['create_time'] < punchset.ework_etime:
                     punch['ework_time'] = item['create_time']
                     if item['create_time'] < punchset.ework_time:
@@ -64,7 +67,7 @@ def getpunch(request):
                         punch['ework_status'] = 1
                     else:
                         punch['ework_status'] = 0
-                Punch.objects.update_or_create(user_id=item['user_id'], create_date=item['create_date'], defaults=punch)
+                Punch.objects.update_or_create(name=punch['name'], defaults=punch)
         else:
             punch['user_id'] = user.user_id
             punch['nowork_status'] = True

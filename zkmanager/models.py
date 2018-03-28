@@ -30,6 +30,7 @@ EworkStatus = {
 
 
 class Punch(models.Model):
+    name = models.CharField(max_length=30, unique=True, verbose_name=u"名称")
     user = models.ForeignKey('ZkUser', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u"用户")
     verifymode = models.CharField(max_length=30, default=1, verbose_name=u"打卡模式")
     swork_status = models.CharField(max_length=3, choices=SworkStatus.items(), default=2, verbose_name=u'签到状态')
