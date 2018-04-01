@@ -49,9 +49,9 @@ def getpunch(request, cur_date=None):
         punchusers.append(i["user_id"])
     zkusers = ZkUser.objects.all()
     for user in zkusers:
+        punch = dict()
         if str(user.user_id) in punchusers:
             for item in queryset:
-                punch = dict()
                 if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
@@ -70,6 +70,7 @@ def getpunch(request, cur_date=None):
                 Punch.objects.update_or_create(user_id=item["user_id"], create_date=cur_date, defaults=punch)
         else:
             punch['user_id'] = user.user_id
+            punch['create_date'] = cur_date
             punch['nowork_status'] = True
             p = Punch.objects.create(**punch)
             p.save()
