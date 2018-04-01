@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from zkapi.settings import zk
-from zkapi.settings import zk_m_id as m_id
+from kaoqin.settings import zk
+from kaoqin.settings import zk_m_id as m_id
 from datetime import date, time
 
 

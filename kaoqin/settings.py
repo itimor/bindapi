@@ -32,7 +32,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'zkapi.urls'
+ROOT_URLCONF = 'kaoqin.urls'
 
 TEMPLATES = [
     {
@@ -50,7 +50,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'zkapi.wsgi.application'
+WSGI_APPLICATION = 'kaoqin.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -58,7 +58,7 @@ WSGI_APPLICATION = 'zkapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'zkapi.db'),
+        'NAME': os.path.join(BASE_DIR, 'kaoqin.db'),
     }
 }
 

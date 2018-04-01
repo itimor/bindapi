@@ -2,7 +2,7 @@
 # author: kiven
 
 from django.conf.urls import url, include
-from zkapi.routerApi import router
+from kaoqin.routerApi import router
 from zkmanager.views import getzkuser
 from zkmanager.views import getpunch
 
