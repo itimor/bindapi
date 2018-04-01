@@ -19,7 +19,7 @@ class ZkUserViewSet(viewsets.ModelViewSet):
 
 
 class PunchViewSet(viewsets.ModelViewSet):
-    queryset = Punch.objects.all()
+    queryset = Punch.objects.all().order_by('-create_date')
     serializer_class = PunchSerializer
     filter_class = PunchFilter
     search_fields = ['user__username']
@@ -52,9 +52,6 @@ def getpunch(request, cur_date=None):
         if str(user.user_id) in punchusers:
             for item in queryset:
                 punch = dict()
-                punch['name'] = '{}-{}'.format(item["user_id"], cur_date)
-                punch['user_id'] = item["user_id"]
-                punch['create_date'] = datetime.strptime(cur_date, '%Y-%m-%d')
                 if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                     punch['swork_time'] = item['create_time']
                     if item['create_time'] > punchset.swork_time:
@@ -70,7 +67,7 @@ def getpunch(request, cur_date=None):
                         punch['ework_status'] = 1
                     else:
                         punch['ework_status'] = 0
-                Punch.objects.update_or_create(name=punch['name'], defaults=punch)
+                Punch.objects.update_or_create(user_id=item["user_id"], create_date=cur_date, defaults=punch)
         else:
             punch['user_id'] = user.user_id
             punch['nowork_status'] = True
