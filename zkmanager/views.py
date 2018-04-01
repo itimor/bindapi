@@ -19,7 +19,7 @@ class ZkUserViewSet(viewsets.ModelViewSet):
 
 
 class PunchViewSet(viewsets.ModelViewSet):
-    queryset = Punch.objects.all().order_by('user_id', '-create_date')
+    queryset = Punch.objects.all().order_by('user_id', 'create_date')
     serializer_class = PunchSerializer
     filter_class = PunchFilter
     search_fields = ['user__username']
