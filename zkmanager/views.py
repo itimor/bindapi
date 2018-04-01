@@ -48,28 +48,34 @@ def getpunch(request, cur_date=None):
     for i in queryset:
         punchusers.append(i["user_id"])
     zkusers = ZkUser.objects.all()
-    for user in zkusers:
+    zkpunchusers = []
+    for i in zkusers:
+        zkpunchusers.append(i.user_id)
+    for user in zkpunchusers:
         punch = dict()
-        if str(user.user_id) in punchusers:
+        if user in punchusers:
             for item in queryset:
-                if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
-                    punch['swork_time'] = item['create_time']
-                    if item['create_time'] > punchset.swork_time:
-                        punch['swork_timec'] = diff_times_in_seconds(punchset.swork_time, item['create_time'])
-                        punch['swork_status'] = 1
-                    else:
-                        punch['swork_status'] = 0
+                if item["user_id"] in zkpunchusers:
+                    if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
+                        punch['swork_time'] = item['create_time']
+                        if item['create_time'] > punchset.swork_time:
+                            punch['swork_timec'] = diff_times_in_seconds(punchset.swork_time, item['create_time'])
+                            punch['swork_status'] = 1
+                        else:
+                            punch['swork_status'] = 0
 
-                elif punchset.ework_stime < item['create_time'] < punchset.ework_etime:
-                    punch['ework_time'] = item['create_time']
-                    if item['create_time'] < punchset.ework_time:
-                        punch['ework_timec'] = diff_times_in_seconds(item['create_time'], punchset.swork_time)
-                        punch['ework_status'] = 1
-                    else:
-                        punch['ework_status'] = 0
-                Punch.objects.update_or_create(user_id=item["user_id"], create_date=cur_date, defaults=punch)
+                    elif punchset.ework_stime < item['create_time'] < punchset.ework_etime:
+                        punch['ework_time'] = item['create_time']
+                        if item['create_time'] < punchset.ework_time:
+                            punch['ework_timec'] = diff_times_in_seconds(item['create_time'], punchset.swork_time)
+                            punch['ework_status'] = 1
+                        else:
+                            punch['ework_status'] = 0
+                    Punch.objects.update_or_create(user_id=item["user_id"], create_date=cur_date, defaults=punch)
+                else:
+                    print('this user %s was deleted!' % item["user_id"])
         else:
-            punch['user_id'] = user.user_id
+            punch['user_id'] = user
             punch['create_date'] = cur_date
             punch['nowork_status'] = True
             p = Punch.objects.create(**punch)
