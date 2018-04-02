@@ -50,12 +50,13 @@ def getpunch(request, cur_date=None):
     zkusers = ZkUser.objects.all()
     zkpunchusers = []
     for i in zkusers:
-        zkpunchusers.append(i.user_id)
+        zkpunchusers.append(str(i.user_id))
+
     for user in zkpunchusers:
-        punch = dict()
         if user in punchusers:
             for item in queryset:
                 if item["user_id"] in zkpunchusers:
+                    punch = dict()
                     if punchset.swork_stime < item['create_time'] < punchset.swork_etime:
                         punch['swork_time'] = item['create_time']
                         if item['create_time'] > punchset.swork_time:
