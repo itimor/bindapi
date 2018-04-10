@@ -55,10 +55,21 @@ WSGI_APPLICATION = 'kaoqin.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'kaoqin.db'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'kaoqin.db'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'oms',
+        'USER': 'oms',
+        'PASSWORD': 'sUT.a2^{O1j8WSWo',
+        'HOST': '172.19.6.11',
+        'PORT': '5432'
     }
 }
 
