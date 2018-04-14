@@ -6,3 +6,8 @@ dlz "mysql-dlz" {
     {}
     {select ttl, type, name, mx_priority, data from bind_record where zone_id = (select id from bind_zone where name = '$zone$') and not (type = 'SOA' or type = 'NS')}";
 };
+
+INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, 'www', 'A', '1.1.1.22', '600' );
+INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, 'bbs', 'CNAME', 'www', '600' );
+INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, '@', 'NS', 'ns', '60' );
+INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, 'ns', 'A', '1.1.1.11', '600' );
