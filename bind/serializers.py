@@ -20,8 +20,8 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = (
-            'url', 'id', 'zone', 'name', 'type', 'value', 'ttl', 'mx_priority', 'refresh', 'retry', 'expire', 'minimum',
-            'serial', 'resp_person', 'primary_ns', 'create_time', 'update_time')
+            'url', 'id', 'zone', 'name', 'type', 'value', 'ttl', 'mx_priority', 'serial', 'refresh', 'retry', 'expire',
+            'minimum', 'resp_person', 'primary_ns', 'create_time', 'update_time')
 
 
 class AclSetSerializer(serializers.ModelSerializer):

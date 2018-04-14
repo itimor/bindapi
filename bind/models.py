@@ -15,8 +15,8 @@ class Zone(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = u'域'
-        verbose_name_plural = u'域'
+        verbose_name = '域'
+        verbose_name_plural = '域'
 
 
 Types = {
@@ -33,11 +33,11 @@ class Record(models.Model):
     value = models.CharField(max_length=255, verbose_name=u"记录值")
     ttl = models.IntegerField(default=600, verbose_name=u"缓存时间")
     mx_priority = models.IntegerField(null=True, blank=True, verbose_name=u"mx记录优先级")
+    serial = models.BigIntegerField(null=True, blank=True, verbose_name=u"SOA记录的序列号")
     refresh = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的刷新时间")
     retry = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的重试时间")
     expire = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的过期时间")
     minimum = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的minimum")
-    serial = models.BigIntegerField(null=True, blank=True, verbose_name=u"SOA记录的序列号")
     resp_person = models.CharField(max_length=64, null=True, blank=True, verbose_name=u"SOA记录的序列号")
     primary_ns = models.CharField(max_length=64, null=True, blank=True, verbose_name=u"主dns")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
@@ -47,14 +47,14 @@ class Record(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = u'记录'
-        verbose_name_plural = u'记录'
+        verbose_name = '记录'
+        verbose_name_plural = '记录'
 
 
 class Acl(models.Model):
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, verbose_name=u"所在域")
-    client = models.CharField(max_length=255, verbose_name=u"网段")
+    client = models.CharField(max_length=255, verbose_name=u"记录名")
 
     class Meta:
-        verbose_name = u'Acl'
-        verbose_name_plural = u'Acl'
+        verbose_name = 'Acl'
+        verbose_name_plural = 'Acl'
