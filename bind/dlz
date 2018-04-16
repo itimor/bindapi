@@ -1,13 +1,13 @@
 dlz "mysql-dlz" {
     database "mysql
     {host=1.1.1.11 dbname=binddns ssl=false port=3306 user=bind pass=123456}
-    {select name from bind_zone where name = '$zone$' limit 1}
-    {select ttl, type, mx_priority, case when lower(type)='txt' then concat('\"', value, '\"') when lower(type) = 'soa' then concat_ws(' ', value, resp_person, serial, refresh, retry, expire, minimum) else value end from bind_record where zone_id = (select id from bind_zone where name = '$zone$') and name = '$record$'}
+    {select name from bind_domain where name = '$zone$' limit 1}
+    {select ttl, type, mx_priority, case when lower(type)='txt' then concat('\"', value, '\"') when lower(type) = 'soa' then concat_ws(' ', value, resp_person, serial, refresh, retry, expire, minimum) else value end from bind_record where domain_id = (select id from bind_domain where name = '$zone$') and name = '$record$'}
     {}
-    {select ttl, type, name, mx_priority, data from bind_record where zone_id = (select id from bind_zone where name = '$zone$') and not (type = 'SOA' or type = 'NS')}";
+    {select ttl, type, name, mx_priority, data from bind_record where domain_id = (select id from bind_domain where name = '$zone$') and not (type = 'SOA' or type = 'NS')}";
 };
 
-INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, 'www', 'A', '1.1.1.22', '600' );
-INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, 'bbs', 'CNAME', 'www', '600' );
-INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, '@', 'NS', 'ns', '60' );
-INSERT INTO bind_record ( zone_id, name, type, value, ttl ) VALUES ( 1, 'ns', 'A', '1.1.1.11', '600' );
+INSERT INTO bind_record ( domain_id, name, type, value, ttl ) VALUES ( 1, 'www', 'A', '1.1.1.22', '600' );
+INSERT INTO bind_record ( domain_id, name, type, value, ttl ) VALUES ( 1, 'bbs', 'CNAME', 'www', '600' );
+INSERT INTO bind_record ( domain_id, name, type, value, ttl ) VALUES ( 1, '@', 'NS', 'ns', '60' );
+INSERT INTO bind_record ( domain_id, name, type, value, ttl ) VALUES ( 1, 'ns', 'A', '1.1.1.11', '600' );
