@@ -2,7 +2,6 @@
 # author: kiven
 
 import os
-import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'libti7mq=88d+s!ds$c7lvg8e38jo*pqwywogpqf_=fl#xl8%4'
@@ -19,6 +18,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',  # 过滤
     'corsheaders',  # 跨域
+    'rest_framework.authtoken', # token验证
     'bind',
 ]
 
@@ -55,13 +55,6 @@ WSGI_APPLICATION = 'bindapi.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'bindapi.db'),
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -115,7 +108,6 @@ REST_USE_JWT = True
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
     'DEFAULT_FILTER_BACKENDS': (
@@ -126,14 +118,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
-}
-
-JWT_AUTH = {
-    'JWT_AUTH_HEADER_PREFIX': 'token',
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=15),
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
