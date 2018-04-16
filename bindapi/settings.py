@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',  # 过滤
     'corsheaders',  # 跨域
-    'rest_framework.authtoken', # token验证
+    'rest_framework.authtoken',  # token验证
     'bind',
 ]
 
@@ -104,7 +104,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-REST_USE_JWT = True
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_PERMISSION_CLASSES': (
