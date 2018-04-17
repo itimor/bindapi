@@ -34,6 +34,7 @@ def getallurls(request):
     domains = Domain.objects.all()
     for domain in domains:
         suffix = domain.name
+        allurls.append(suffix)
         records = Record.objects.filter(
             Q(domain__name=suffix) &
             (
@@ -45,9 +46,7 @@ def getallurls(request):
         )
         for record in records:
             prefix = record.name
-            if prefix == '@':
-                allurls.append(suffix)
-            else:
+            if prefix != '@':
                 allurls.append(prefix + '.' + suffix)
 
-    return Response(set(allurls))
+    return Response(allurls)
