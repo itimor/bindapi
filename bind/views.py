@@ -7,11 +7,13 @@ from bind.serializers import DomainSerializer, RecordSerializer, AclSetSerialize
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Q
+from rest_framework.permissions import IsAdminUser
 
 
 class DomainViewSet(viewsets.ModelViewSet):
     queryset = Domain.objects.all()
     serializer_class = DomainSerializer
+    permission_classes = (IsAdminUser,)
     filter_fields = ['name', 'create_time']
     search_fields = ['name']
 
@@ -19,6 +21,7 @@ class DomainViewSet(viewsets.ModelViewSet):
 class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all().order_by('create_time')
     serializer_class = RecordSerializer
+    permission_classes = (IsAdminUser,)
     filter_fields = ['domain__name', 'name', 'value', 'create_time']
     search_fields = ['name', 'value']
 
@@ -26,6 +29,7 @@ class RecordViewSet(viewsets.ModelViewSet):
 class AclSetViewSet(viewsets.ModelViewSet):
     queryset = Acl.objects.all()
     serializer_class = AclSetSerializer
+    permission_classes = (IsAdminUser,)
 
 
 @api_view()
