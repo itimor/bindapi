@@ -2,7 +2,6 @@
 # author: kiven
 
 from bind.models import Domain, Record, Acl
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
 
@@ -18,8 +17,8 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = (
-            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'mx_priority', 'serial', 'refresh', 'retry', 'expire',
-            'minimum', 'resp_person', 'primary_ns', 'create_time', 'update_time')
+            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial', 'refresh', 'retry', 'expire',
+            'minimum', 'create_time', 'update_time')
 
 
 class AclSetSerializer(serializers.ModelSerializer):
