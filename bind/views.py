@@ -16,7 +16,7 @@ class DomainViewSet(viewsets.ModelViewSet):
 class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all().order_by('create_time')
     serializer_class = RecordSerializer
-    filter_fields = ['zone__name', 'name', 'value', 'create_time']
+    filter_fields = ['domain__name', 'name', 'value', 'create_time']
     search_fields = ['name', 'value']
 
 

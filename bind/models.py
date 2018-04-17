@@ -30,7 +30,7 @@ Record_Status = {
 
 
 class Record(models.Model):
-    title = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name=u"记录名")
+    title = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name=u"记录全名")
     domain = models.ForeignKey(Domain, on_delete=models.CASCADE, verbose_name=u"所在域")
     name = models.CharField(max_length=30, verbose_name=u"记录名")
     type = models.CharField(choices=Types.items(), default='A', max_length=10, verbose_name=u"记录类型")
