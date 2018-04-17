@@ -4,6 +4,9 @@
 from rest_framework import viewsets
 from bind.models import Domain, Record, Acl
 from bind.serializers import DomainSerializer, RecordSerializer, AclSetSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.db.models import Q
 
 
 class DomainViewSet(viewsets.ModelViewSet):
@@ -23,3 +26,28 @@ class RecordViewSet(viewsets.ModelViewSet):
 class AclSetViewSet(viewsets.ModelViewSet):
     queryset = Acl.objects.all()
     serializer_class = AclSetSerializer
+
+
+@api_view()
+def getallurls(request):
+    allurls = []
+    domains = Domain.objects.all()
+    for domain in domains:
+        suffix = domain.name
+        records = Record.objects.filter(
+            Q(domain__name=suffix) &
+            (
+                Q(type='A') |
+                Q(type='CNAME') |
+                Q(type='TXT') |
+                Q(type='MX')
+            )
+        )
+        for record in records:
+            prefix = record.name
+            if prefix == '@':
+                allurls.append(suffix)
+            else:
+                allurls.append(prefix + '.' + suffix)
+
+    return Response(set(allurls))

@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'corsheaders',  # 跨域
     'rest_framework.authtoken',  # token验证
     'bind',
+    'analyze',
 ]
 
 MIDDLEWARE = [
