@@ -35,6 +35,7 @@ class Record(models.Model):
     name = models.CharField(max_length=30, verbose_name=u"记录名")
     type = models.CharField(choices=Types.items(), default='A', max_length=10, verbose_name=u"记录类型")
     value = models.CharField(max_length=50, verbose_name=u"记录值")
+    value2 = models.CharField(max_length=50, null=True, blank=True, verbose_name=u"备用记录值")
     status = models.CharField(choices=Record_Status.items(), default='enable', max_length=11, verbose_name=u'状态')
     ttl = models.IntegerField(default=600, verbose_name=u"缓存时间")
     mx = models.IntegerField(null=True, blank=True, verbose_name=u"mx记录优先级")
@@ -57,12 +58,3 @@ class Record(models.Model):
     def save(self, *args, **kwargs):
         self.title = '{}-{}-{}-{}'.format(self.domain, self.name, self.type, self.value)
         super(Record, self).save(*args, **kwargs)
-
-
-class Acl(models.Model):
-    domain = models.ForeignKey(Domain, on_delete=models.CASCADE, verbose_name=u"所在域")
-    client = models.CharField(max_length=255, verbose_name=u"记录名")
-
-    class Meta:
-        verbose_name = 'Acl'
-        verbose_name_plural = 'Acl'

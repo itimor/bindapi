@@ -2,8 +2,8 @@
 # author: kiven
 
 from rest_framework import viewsets
-from bind.models import Domain, Record, Acl
-from bind.serializers import DomainSerializer, RecordSerializer, AclSetSerializer
+from bind.models import Domain, Record
+from bind.serializers import DomainSerializer, RecordSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Q
@@ -26,12 +26,6 @@ class RecordViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'value']
 
 
-class AclSetViewSet(viewsets.ModelViewSet):
-    queryset = Acl.objects.all()
-    serializer_class = AclSetSerializer
-    permission_classes = (IsAdminUser,)
-
-
 @api_view()
 def getallurls(request):
     allurls = []
@@ -48,16 +42,8 @@ def getallurls(request):
             )
         )
         for record in records:
-            data = dict()
             prefix = record.name
-            if prefix == '@':
-                data['url'] = suffix
-                data['type'] = record.type
-                data['value'] = record.value
-            else:
-                data['url'] = prefix + '.' + suffix
-                data['type'] = record.type
-                data['value'] = record.value
-            allurls.append(data)
+            if prefix != '@':
+                allurls.append(prefix + '.' + suffix)
 
     return Response(allurls)

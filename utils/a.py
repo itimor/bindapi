@@ -3,52 +3,30 @@
 
 import requests
 import json
-from dns.resolver import query
-
-
-def dnsinfo(url, type):
-    try:
-        info = query(url, type)
-        for i in info.response.answer:
-            for j in i.items:
-                result = j.to_text()
-        return result
-    except:
-        return ''
 
 
 def diffdns(allurl):
     allurls = json.loads(requests.get(allurl).text)
     oo = []
     for url in allurls:
-        uu = 'http://127.0.0.1:8888/api/domainstatus/?url='
-        urlinfos = json.loads(requests.get(uu + url['url']).text)
-        c = dict()
+        uu = 'http://127.0.0.1:8888/api/domainstatus/?domain='
+        urlinfos = json.loads(requests.get(uu + url).text)
+        ss = ee = []
         for info in urlinfos:
-            c[info['node']] = info['ip']
-        ss = []
-        ee = []
-        all = len(urlinfos)
-        ainfo = url['value']
-        for info in urlinfos:
-            if info['ip'] == ainfo:
+            if info['status']:
                 ss.append(info['node'])
             else:
                 ee.append(info['node'])
-        dinfo = dict()
-        if len(ss) > all/2:
-            dinfo['status'] = 'true'
-            a = []
-            for h in ss:
-                a.append(c[h])
-            dinfo['value'] = list(set(a))
+
+        result = dict()
+        result['node_count'] = len(urlinfos)
+        if len(ss) > result['node_count']/2:
+            result['status'] = True
+            result['error_node'] = ee
         else:
-            dinfo['status'] = 'false'
-            b = []
-            for h in ee:
-                b.append(c[h])
-            dinfo['value'] = list(set(b))
-        oo.append({url['url']: dinfo})
+            result['status'] = False
+            result['error_node'] = ee
+        oo.append({url: result})
     return oo
 
 

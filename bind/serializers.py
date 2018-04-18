@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # author: kiven
 
-from bind.models import Domain, Record, Acl
+from bind.models import Domain, Record
 from rest_framework import serializers
 
 
@@ -17,13 +17,5 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = (
-            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial', 'refresh', 'retry', 'expire',
-            'minimum', 'create_time', 'update_time')
-
-
-class AclSetSerializer(serializers.ModelSerializer):
-    domain = serializers.SlugRelatedField(queryset=Domain.objects.all(), slug_field='name')
-
-    class Meta:
-        model = Acl
-        fields = ('url', 'id', 'domain', 'client')
+            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'value2', 'ttl', 'status', 'mx', 'serial',
+            'refresh', 'retry', 'expire', 'minimum', 'create_time', 'update_time')

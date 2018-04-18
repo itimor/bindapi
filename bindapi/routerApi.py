@@ -5,11 +5,10 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 
-from bind.views import DomainViewSet, RecordViewSet, AclSetViewSet
+from bind.views import DomainViewSet, RecordViewSet
 
 router.register(r'domains', DomainViewSet)
 router.register(r'records', RecordViewSet)
-router.register(r'acls', AclSetViewSet)
 
 from analyze.views import DomainNodeViewSet, DomainStatusViewSet
 
