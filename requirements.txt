@@ -1,9 +1,14 @@
 certifi==2018.1.18
+chardet==3.0.4
 Django==2.0.4
 django-cors-headers==2.2.0
 django-filter==1.1.0
 djangorestframework==3.8.2
+dnspython==1.15.0
+idna==2.6
 PyJWT==1.6.1
 PyMySQL==0.8.0
 pytz==2018.4
+requests==2.18.4
+urllib3==1.22
 wincertstore==0.2

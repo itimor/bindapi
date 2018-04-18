@@ -16,4 +16,4 @@ class DomainStatusSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DomainStatus
-        fields = ('url', 'id', 'node', 'url', 'ip', 'status', 'create_time')
+        fields = ('url', 'id', 'node', 'url', 'ip', 'type', 'create_time')

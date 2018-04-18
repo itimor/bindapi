@@ -20,8 +20,8 @@ class DomainNode(models.Model):
 class DomainStatus(models.Model):
     node = models.ForeignKey(DomainNode, on_delete=models.CASCADE, verbose_name=u"节点")
     url = models.CharField(max_length=100, verbose_name=u"域名")
+    type = models.CharField(max_length=10, verbose_name=u"类型")
     ip = models.CharField(max_length=100, verbose_name=u"解析ip")
-    status = models.CharField(max_length=100, verbose_name=u"状态")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
 
     class Meta:
