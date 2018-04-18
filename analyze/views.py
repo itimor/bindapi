@@ -15,4 +15,4 @@ class DomainNodeViewSet(viewsets.ModelViewSet):
 class DomainStatusViewSet(viewsets.ModelViewSet):
     queryset = DomainStatus.objects.all()
     serializer_class = DomainStatusSerializer
-    filter_fields = ['node__name', 'url']
+    filter_fields = ['node__name', 'domain']
