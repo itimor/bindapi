@@ -6,12 +6,13 @@ import requests
 
 
 class SeBook(object):
-    def __init__(self, main_url, total_page_comp, page_url_comp, title_page_comp, keyword_comp):
+    def __init__(self, main_url, total_page_comp, page_url_comp, title_page_comp, keyword_comp, book_comp):
         self.main_url = main_url
         self.total_page_comp = total_page_comp
         self.page_url_comp = page_url_comp
         self.title_page_comp = title_page_comp
         self.keyword_comp = keyword_comp
+        self.book_comp = book_comp
 
     def encode_char(self, url):
         html = requests.get(url)
@@ -25,7 +26,7 @@ class SeBook(object):
         else:
             return False
 
-    def main(self):
+    def a_list(self):
         list_data = self.encode_char(self.main_url)
         total_page = int(re.findall(self.total_page_comp, list_data)[0])
         page_url = re.findall(self.page_url_comp, list_data)[0]
@@ -45,19 +46,37 @@ class SeBook(object):
             d = re.findall(self.title_page_comp, title_list)
             for item in d:
                 if self.comp_match(item[1]) and item not in re_list:
-                    with open('yuse.txt', 'a+') as fn:
-                        fn.write('{} {}{}\n'.format(item[1], self.main_url, item[0]))
-                    re_list.append(self.main_url + item[0])
-
+                    re_list.append((item[1], self.main_url + item[0]))
+        print(len(re_list))
         return re_list
+
+    def g_book(self):
+        re_list = self.a_list()
+        for item in re_list:
+            book_date = self.encode_char(item[1])
+            book_content = re.findall(self.book_comp, book_date)[0]
+            with open('校园.txt', 'a+') as fn:
+                fn.write('第一章 \t{}\n{}\n\n\r\n'.format(item[0], book_content))
+
+        return True
 
 
 if __name__ == '__main__':
-    main_url = 'http://www.yusetv.com/wenxue/renqiluanlun/'
+    main_url = 'http://www.yusetv.com/wenxue/'
+
+    # uri = 'renqiluanlun/'
+    # keyword_comp = re.compile(r'.*[姐|妹|哥|姊].*'
+    # title_page_comp = re.compile(r'<a href="/wenxue/%s([0-9]+/[0-9]+.html)">\[(.*?)\]' % uri)
+    # book_comp = re.compile(r'<font size="4">作者(.*)</font>', re.DOTALL)
+
+
+    uri = 'qingqingxiaoyuan/'
+    keyword_comp = re.compile(r'.*[妹|花|美|神].*')
+    title_page_comp = re.compile(r'<a href="/wenxue/%s([0-9]+/[0-9]+.html)">(.*?)</a>' % uri)
+    book_comp = re.compile(r'青青校园</a> >(.*)<div class="tools', re.DOTALL)
+
+
     total_page_comp = re.compile(r"_\d+_(\d+).html'>末页")
     page_url_comp = re.compile(r"'(list_\d+_)\d+.html'>末页")
-    title_page_comp = re.compile(r'<i>\d+-\d+-\d+</i><a href="/wenxue/renqiluanlun/(\d+/\d+.html)">\[(.*?)\]')
-    keyword_comp = re.compile(r'.*[姐|妹|哥|姊].*')
-    # keyword_comp = re.compile(r'.*[姐|妹|师|姊|花]!奸.*')
-    sebook = SeBook(main_url, total_page_comp, page_url_comp, title_page_comp, keyword_comp)
-    print(sebook.main())
+    sebook = SeBook(main_url + uri, total_page_comp, page_url_comp, title_page_comp, keyword_comp, book_comp)
+    sebook.g_book()
