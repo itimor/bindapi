@@ -45,8 +45,8 @@ class SeBook(object):
             d = re.findall(self.title_page_comp, title_list)
             for item in d:
                 if self.comp_match(item[1]) and item not in re_list:
-                    # with open('yuse.txt', 'w') as fn:
-                    #     fn.write('{} {}{}'.format(item[1], url, item[0]))
+                    with open('yuse.txt', 'a+') as fn:
+                        fn.write('{} {}{}\n'.format(item[1], self.main_url, item[0]))
                     re_list.append(self.main_url + item[0])
 
         return re_list
