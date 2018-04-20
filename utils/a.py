@@ -21,13 +21,14 @@ def diffdns(allurl):
         result = dict()
         result['node_count'] = len(urlinfos)
         result['error_node'] = ee
+        result['url'] = url
 
         if len(ss) > result['node_count']/2:
             result['status'] = True
         else:
             result['status'] = False
 
-        oo.append({url: result})
+        oo.append(result)
     return oo
 
 
