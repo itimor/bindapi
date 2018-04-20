@@ -42,6 +42,8 @@ for page in page_urls:
     d = re.findall(title_page, title_list)
     for item in d:
         if comp(m, item[1]) and item not in re_list:
+            # with open('yuse.txt', 'w') as fn:
+            #     fn.write('{} {}{}'.format(item[1], url, item[0]))
             re_list.append(url + item[0])
 
 print(re_list)
