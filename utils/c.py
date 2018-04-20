@@ -26,7 +26,7 @@ data = encode_char(url)
 total_page = int(re.findall("_\d+_(\d+).html'>末页", data)[0])
 page_url = re.findall("'(list_\d+_)\d+.html'>末页", data)[0]
 
-title_page = re.compile(r'<i>\d+-\d+-\d+</i><a href="(/wenxue/renqiluanlun/\d+/\d+.html)">\[(.*?)\]')
+title_page = re.compile(r'<i>\d+-\d+-\d+</i><a href="/wenxue/renqiluanlun/(\d+/\d+.html)">\[(.*?)\]')
 
 # get all_page_urls
 page_urls = []
@@ -42,6 +42,6 @@ for page in page_urls:
     d = re.findall(title_page, title_list)
     for item in d:
         if comp(m, item[1]) and item not in re_list:
-            re_list.append(item)
+            re_list.append(url + item[0])
 
 print(re_list)
