@@ -58,6 +58,6 @@ if __name__ == '__main__':
     page_url_comp = re.compile(r"'(list_\d+_)\d+.html'>末页")
     title_page_comp = re.compile(r'<i>\d+-\d+-\d+</i><a href="/wenxue/renqiluanlun/(\d+/\d+.html)">\[(.*?)\]')
     keyword_comp = re.compile(r'.*[姐|妹|哥|姊].*')
-    # keyword_comp = re.compile(r'.*[姐|妹|师|姊].*')
+    # keyword_comp = re.compile(r'.*[姐|妹|师|姊|花].*')
     sebook = SeBook(main_url, total_page_comp, page_url_comp, title_page_comp, keyword_comp)
     print(sebook.main())
