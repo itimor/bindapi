@@ -17,5 +17,5 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = (
-            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'value2', 'ttl', 'status', 'mx', 'serial',
+            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
             'refresh', 'retry', 'expire', 'minimum', 'create_time', 'update_time')
