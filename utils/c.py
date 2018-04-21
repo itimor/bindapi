@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
 
     uri = 'qingqingxiaoyuan/'
-    keyword_comp = re.compile(r'.*[妹|花|美|神].*')
+    keyword_comp = re.compile(r'.*[妹姐课].*')
     title_page_comp = re.compile(r'<a href="/wenxue/%s([0-9]+/[0-9]+.html)">(.*?)</a>' % uri)
     book_comp = re.compile(r'青青校园</a> >(.*)<div class="tools', re.DOTALL)
 

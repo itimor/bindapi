@@ -15,7 +15,6 @@ class Solution:
                 start = used[c] + 1
             else:
                 max_length = max(max_length, i - start + 1)
-
             used[c] = i
         return max_length
 
