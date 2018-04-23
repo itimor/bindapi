@@ -13,7 +13,7 @@ alldomain_url = bind_api_url + 'getallurls/'
 domains = ['www.baidu.com', 'www.taobao.com']  # 实际访问 alldomain_url 获得
 
 for domain in domains:
-    html = requests.get(domain, verify=False)
+    html = requests.get(domain + '/favicon.ico', verify=False)
 
     post_message = {
         'node': node,
