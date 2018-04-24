@@ -3,8 +3,7 @@
 
 from rest_framework import viewsets
 from bind.models import Domain, Record
-from bind.serializers import DomainSerializer, RecordSerializer
-from rest_framework.decorators import api_view
+from bind.serializers import DomainSerializer, RecordSerializer, ALLDomainSerializer
 from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.permissions import IsAdminUser
@@ -26,24 +25,25 @@ class RecordViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'value']
 
 
-@api_view()
-def getallurls(request):
-    allurls = []
-    domains = Domain.objects.all()
-    for domain in domains:
-        suffix = domain.name
-        records = Record.objects.filter(
-            Q(domain__name=suffix) &
-            (
-                Q(type='A') |
-                Q(type='CNAME') |
-                Q(type='TXT') |
-                Q(type='MX')
-            )
-        )
-        for record in records:
-            prefix = record.name
-            if prefix != '@':
-                allurls.append(prefix + '.' + suffix)
+class AllDomainViewSet(viewsets.ViewSet):
+    serializer_class = ALLDomainSerializer
 
-    return Response(allurls)
+    def list(self, request):
+        allurls = []
+        domains = Domain.objects.all()
+        for domain in domains:
+            suffix = domain.name
+            records = Record.objects.filter(
+                Q(domain__name=suffix) &
+                (
+                    Q(type='A') |
+                    Q(type='CNAME') |
+                    Q(type='TXT') |
+                    Q(type='MX')
+                )
+            )
+            for record in records:
+                prefix = record.name
+                if prefix != '@':
+                    allurls.append({'name': prefix + '.' + suffix})
+        return Response(allurls)
