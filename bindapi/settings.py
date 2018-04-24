@@ -63,7 +63,7 @@ DATABASES = {
         'NAME': 'binddns',
         'USER': 'bind',
         'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'HOST': '118.193.136.206',
         'PORT': '3306'
     }
 }

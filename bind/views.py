@@ -3,7 +3,7 @@
 
 from rest_framework import viewsets
 from bind.models import Domain, Record
-from bind.serializers import DomainSerializer, RecordSerializer, ALLDomainSerializer
+from bind.serializers import DomainSerializer, RecordSerializer
 from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.permissions import IsAdminUser
@@ -26,7 +26,6 @@ class RecordViewSet(viewsets.ModelViewSet):
 
 
 class AllDomainViewSet(viewsets.ViewSet):
-    serializer_class = ALLDomainSerializer
 
     def list(self, request):
         allurls = []
@@ -45,5 +44,5 @@ class AllDomainViewSet(viewsets.ViewSet):
             for record in records:
                 prefix = record.name
                 if prefix != '@':
-                    allurls.append({'name': prefix + '.' + suffix})
+                    allurls.append(prefix + '.' + suffix)
         return Response(allurls)

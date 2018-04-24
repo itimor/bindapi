@@ -9,7 +9,7 @@ from bind.views import DomainViewSet, RecordViewSet, AllDomainViewSet
 
 router.register(r'domains', DomainViewSet)
 router.register(r'records', RecordViewSet)
-router.register(r'alldomains', AllDomainViewSet)
+router.register(r'alldomains', AllDomainViewSet, base_name='alldomains')
 
 from analyze.views import DomainNodeViewSet, DomainStatusViewSet
 

@@ -19,7 +19,3 @@ class RecordSerializer(serializers.ModelSerializer):
         fields = (
             'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
             'refresh', 'retry', 'expire', 'minimum', 'create_time', 'update_time')
-
-
-class ALLDomainSerializer(serializers.Serializer):
-    name = serializers.CharField()
