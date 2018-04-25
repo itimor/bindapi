@@ -41,8 +41,8 @@ class AllDomainViewSet(viewsets.ViewSet):
                     Q(type='MX')
                 )
             )
-            for record in records and record.tan:
+            for record in records:
                 prefix = record.name
-                if prefix != '@':
+                if prefix != '@' and record.tan:
                     allurls.append(prefix + '.' + suffix)
         return Response(allurls)
