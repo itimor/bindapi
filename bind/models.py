@@ -43,7 +43,7 @@ class Record(models.Model):
     retry = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的重试时间")
     expire = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的过期时间")
     minimum = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的minimum")
-    # primary_ns = models.CharField(max_length=64, null=True, blank=True, verbose_name=u"主dns")
+    tan = models.BooleanField(default=False, verbose_name=u"是否探测")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name=u"更新时间")
 
