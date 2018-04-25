@@ -2,6 +2,7 @@
 # author: itimor
 
 import requests
+import json
 
 node = 'node01'
 
@@ -12,8 +13,9 @@ alldomain_url = bind_api_url + 'alldomains/'
 
 domains = requests.get(alldomain_url)
 
-for domain in domains:
-    html = requests.get('http://' + domain + tan_page, verify=False)
+for domain in json.loads(domains.text):
+    url = 'http://' + domain + tan_page
+    html = requests.get(url, verify=False)
 
     post_message = {
         'node': node,
