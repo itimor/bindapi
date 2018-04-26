@@ -29,14 +29,15 @@ class TanThread(threading.Thread):
         while not self.thread_stop:
             print("thread %s: waiting for task" % self.thread_name)
             try:
-                domain = self.domains_queue.get(block=True)
+                domain = self.domains_queue.get(block=True, timeout=5)
                 print("task https://%s is running" % domain)
                 post_data(domain, self.node, self.tanpost_url)
             except Empty:
                 print("Nothing to do! to play ball!")
                 self.thread_stop = True
                 break
-        self.domains_queue.task_done()
+
+            self.domains_queue.task_done()
 
     def stop(self):
         self.thread_stop = True
