@@ -29,7 +29,7 @@ class TanThread(threading.Thread):
         while not self.thread_stop:
             print("thread %s: waiting for task" % self.thread_name)
             try:
-                domain = self.domains_queue.get(block=True, timeout=5)
+                domain = self.domains_queue.get(block=True)
                 print("task https://%s is running" % domain)
                 post_data(domain, self.node, self.tanpost_url)
             except Empty:

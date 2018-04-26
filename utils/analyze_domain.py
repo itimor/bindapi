@@ -5,12 +5,12 @@ import requests
 import json
 
 
-def diffdns(allurl):
-    allurls = json.loads(requests.get(allurl).text)
+def diffdns(alldomains):
+    domains = json.loads(requests.get(alldomains).text)
     oo = []
-    for url in allurls:
-        uu = 'http://127.0.0.1:8888/api/domainstatus/?domain='
-        urlinfos = json.loads(requests.get(uu + url).text)
+    for domain in domains:
+        uu = 'http://118.193.136.206:8000/api/domainstatus/?domain='
+        urlinfos = json.loads(requests.get(uu + domain).text)
         ss = []
         ee = []
         for info in urlinfos:
@@ -21,9 +21,9 @@ def diffdns(allurl):
         result = dict()
         result['node_count'] = len(urlinfos)
         result['error_node'] = ee
-        result['url'] = url
+        result['url'] = domain
 
-        if len(ss) > result['node_count']/2:
+        if len(ss) > result['node_count'] / 2:
             result['status'] = True
         else:
             result['status'] = False
@@ -33,5 +33,5 @@ def diffdns(allurl):
 
 
 if __name__ == '__main__':
-    allurl = 'http://127.0.0.1:8888/api/getallurls/'
-    print(diffdns(allurl))
+    alldomains = 'http://118.193.136.206:8000/api/alldomains/'
+    print(diffdns(alldomains))
