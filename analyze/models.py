@@ -21,7 +21,8 @@ class DomainStatus(models.Model):
     node = models.ForeignKey(DomainNode, on_delete=models.CASCADE, verbose_name=u"节点")
     domain = models.CharField(max_length=100, verbose_name=u"域名")
     status = models.BooleanField(default=True, verbose_name=u"状态")
-    create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
+    create_time = models.TimeField(auto_now_add=True, verbose_name=u"创建时间")
+    create_date = models.DateField(auto_now_add=True, verbose_name=u"创建日期")
 
     class Meta:
         verbose_name = '域名状态'

@@ -4,6 +4,7 @@
 from rest_framework import viewsets
 from analyze.models import DomainNode, DomainStatus
 from analyze.serializers import DomainNodeSerializer, DomainStatusSerializer
+from analyze.filters import DomainStatusFilter
 
 
 class DomainNodeViewSet(viewsets.ModelViewSet):
@@ -15,4 +16,4 @@ class DomainNodeViewSet(viewsets.ModelViewSet):
 class DomainStatusViewSet(viewsets.ModelViewSet):
     queryset = DomainStatus.objects.all()
     serializer_class = DomainStatusSerializer
-    filter_fields = ['node__name', 'domain']
+    filter_class = DomainStatusFilter
