@@ -11,4 +11,4 @@ class DomainStatusFilter(filters.FilterSet):
 
     class Meta:
         model = DomainStatus
-        fields = ['node__name', 'domain', 'create_time']
+        fields = ['node__name', 'domain', 'create_date', 'create_time']
