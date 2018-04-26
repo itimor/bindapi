@@ -19,6 +19,9 @@ def diffdns(alldomains):
             domain, cur_date, create_time, cur_time
         )
         urlinfos = json.loads(requests.get(uu).text)
+        if len(urlinfos) < 0:
+            return {'error': 'status is empty!'}
+
         ss = []
         ee = []
         for info in urlinfos:
