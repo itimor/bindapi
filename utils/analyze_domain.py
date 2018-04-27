@@ -32,8 +32,8 @@ def diffdns(alldomains):
         # uu = 'http://118.193.136.206:8000/api/domainstatus/?domain={}'.format(domain)
         urlinfos = json.loads(requests.get(uu).text)
         if not len(urlinfos):
-            logging.error("收集的状态记录为空")
-            break
+            logging.error("%s - 收集的状态记录为空" % domain)
+            continue
 
         ss = []
         ee = []
