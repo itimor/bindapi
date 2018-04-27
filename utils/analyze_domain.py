@@ -4,11 +4,24 @@
 import requests
 import json
 from datetime import datetime, timedelta
+import logging
+
+
+def initlog(logfile):
+    """
+    创建日志实例
+    """
+    logger = logging.getLogger()
+    hdlr = logging.FileHandler(logfile, encoding="utf-8")
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    hdlr.setFormatter(formatter)
+    logger.addHandler(hdlr)
+    logger.setLevel(logging.WARNING)
+    return logger
 
 
 def diffdns(alldomains):
     domains = json.loads(requests.get(alldomains).text)
-    oo = []
     for domain in domains:
         d = datetime.now()
         d10 = d - timedelta(minutes=10)
@@ -19,6 +32,7 @@ def diffdns(alldomains):
         # uu = 'http://118.193.136.206:8000/api/domainstatus/?domain={}'.format(domain)
         urlinfos = json.loads(requests.get(uu).text)
         if not len(urlinfos):
+            logging.error("收集的状态记录为空")
             break
 
         ss = []
@@ -39,8 +53,8 @@ def diffdns(alldomains):
             result['status'] = False
 
             # 自动切换ip
-            record_url = 'http://oms.tb-gaming.local/api/dnsrecords/'
-            # record_url = 'http://127.0.0.1:8000/api/dnsrecords/'
+            # record_url = 'http://oms.tb-gaming.local/api/dnsrecords/'
+            record_url = 'http://127.0.0.1:8000/api/dnsrecords/'
 
             x = domain.split('.')
             domainname = '{}.{}'.format(x[1], x[2])
@@ -53,14 +67,13 @@ def diffdns(alldomains):
                 recorddata['value'], recorddata['value2'] = recorddata['value2'], recorddata['value']
                 put_url = '{}{}/'.format(record_url, recorddata['id'])
                 requests.put(put_url, data=recorddata)
-                print('ip已自动更换')
+                logging.warning("%s - ip已经自动更换 - %s" % (domain, result))
             else:
-                print('没有设置备用ip')
-
-        oo.append(result)
-    return oo
+                logging.error("%s - 没有设置备用ip - %s" % (domain, result))
+    return
 
 
 if __name__ == '__main__':
     alldomains = 'http://118.193.136.206:8000/api/alldomains/'
+    initlog('../logs/tan.log')
     print(diffdns(alldomains))
