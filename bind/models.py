@@ -61,7 +61,7 @@ class Record(models.Model):
 
 class SlaveDns(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name=u"域名")
-    value = models.IPAddressField(verbose_name=u"记录值")
+    value = models.CharField(max_length=100, verbose_name=u"记录值")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name=u"更新时间")
 
