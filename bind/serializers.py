@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # author: kiven
 
-from bind.models import Domain, Record
+from bind.models import Domain, Record, SlaveDns
 from rest_framework import serializers
 
 
@@ -19,3 +19,9 @@ class RecordSerializer(serializers.ModelSerializer):
         fields = (
             'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
             'refresh', 'retry', 'expire', 'minimum', 'tan', 'create_time', 'update_time')
+
+
+class SlaveDnsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SlaveDns
+        fields = ('url', 'id', 'name', 'value', 'create_time', 'update_time')

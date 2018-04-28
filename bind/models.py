@@ -57,3 +57,17 @@ class Record(models.Model):
     def save(self, *args, **kwargs):
         self.title = '{}-{}-{}-{}'.format(self.domain, self.name, self.type, self.value)
         super(Record, self).save(*args, **kwargs)
+
+
+class SlaveDns():
+    name = models.CharField(max_length=100, unique=True, verbose_name=u"域名")
+    value = models.IPAddressField(verbose_name=u"记录值")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
+    update_time = models.DateTimeField(auto_now=True, verbose_name=u"更新时间")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '从dns'
+        verbose_name_plural = '从dns'
