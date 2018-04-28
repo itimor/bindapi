@@ -59,7 +59,7 @@ class Record(models.Model):
         super(Record, self).save(*args, **kwargs)
 
 
-class SlaveDns():
+class SlaveDns(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name=u"域名")
     value = models.IPAddressField(verbose_name=u"记录值")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
