@@ -2,8 +2,8 @@
 # author: kiven
 
 from rest_framework import viewsets
-from bind.models import Domain, Record, SlaveDns
-from bind.serializers import DomainSerializer, RecordSerializer, SlaveDnsSerializer
+from bind.models import Domain, Record
+from bind.serializers import DomainSerializer, RecordSerializer
 from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.permissions import IsAdminUser
@@ -46,8 +46,3 @@ class AllDomainViewSet(viewsets.ViewSet):
                 if prefix != '@' and record.tan:
                     allurls.append(prefix + '.' + suffix)
         return Response(allurls)
-
-
-class SlaveDnsViewSet(viewsets.ModelViewSet):
-    queryset = SlaveDns.objects.all()
-    serializer_class = SlaveDnsSerializer
