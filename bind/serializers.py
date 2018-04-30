@@ -12,10 +12,10 @@ class DomainSerializer(serializers.ModelSerializer):
 
 
 class RecordSerializer(serializers.ModelSerializer):
-    # domain = serializers.SlugRelatedField(queryset=Domain.objects.all(), slug_field='name')
+    # zone = serializers.SlugRelatedField(queryset=Domain.objects.all(), slug_field='name')
 
     class Meta:
         model = Record
         fields = (
-            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
-            'refresh', 'retry', 'expire', 'minimum', 'tan', 'create_time', 'update_time')
+            'url', 'id', 'title', 'zone', 'host', 'type', 'data', 'ttl', 'status', 'mx_priority', 'serial',
+            'refresh', 'retry', 'expire', 'minimum', 'resp_person', 'tan', 'create_time', 'update_time')
