@@ -63,7 +63,7 @@ DATABASES = {
         'NAME': 'bind',
         'USER': 'bind',
         'PASSWORD': 'kX&^!^V!Is',
-        'HOST': '118.193.136.206',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
