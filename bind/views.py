@@ -2,8 +2,8 @@
 # author: kiven
 
 from rest_framework import viewsets
-from bind.models import Domain, Record
-from bind.serializers import DomainSerializer, RecordSerializer
+from bind.models import Domain, Record, XfrAcl
+from bind.serializers import DomainSerializer, RecordSerializer, XfrAclSerializer
 from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.permissions import IsAdminUser
@@ -21,8 +21,15 @@ class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all().order_by('create_time')
     serializer_class = RecordSerializer
     permission_classes = (IsAdminUser,)
-    filter_fields = ['name', 'value', 'create_time']
+    filter_fields = ['domain__name', 'name', 'value', 'create_time']
     search_fields = ['name', 'value']
+
+
+class XfrAclViewSet(viewsets.ModelViewSet):
+    queryset = XfrAcl.objects.all()
+    serializer_class = XfrAclSerializer
+    permission_classes = (IsAdminUser,)
+    filter_fields = ['domain__name', 'client']
 
 
 class AllDomainViewSet(viewsets.ViewSet):

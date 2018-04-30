@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # author: kiven
 
-from bind.models import Domain, Record
+from bind.models import Domain, Record, XfrAcl
 from rest_framework import serializers
 
 
@@ -12,10 +12,18 @@ class DomainSerializer(serializers.ModelSerializer):
 
 
 class RecordSerializer(serializers.ModelSerializer):
-    # zone = serializers.SlugRelatedField(queryset=Domain.objects.all(), slug_field='name')
+    domain = serializers.SlugRelatedField(queryset=Domain.objects.all(), slug_field='name')
 
     class Meta:
         model = Record
         fields = (
-            'url', 'id', 'title', 'zone', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
+            'url', 'id', 'title', 'domain', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
             'refresh', 'retry', 'expire', 'minimum', 'resp_person', 'tan', 'create_time', 'update_time')
+
+
+class XfrAclSerializer(serializers.ModelSerializer):
+    domain = serializers.SlugRelatedField(queryset=Domain.objects.all(), slug_field='name')
+
+    class Meta:
+        model = XfrAcl
+        fields = ('url', 'id', 'title', 'domain', 'client')

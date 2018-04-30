@@ -31,8 +31,7 @@ Record_Status = {
 
 class Record(models.Model):
     title = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name=u"记录全名")
-    # zone = models.ForeignKey(Domain, on_delete=models.CASCADE, verbose_name=u"所在域")
-    zone = models.CharField(max_length=100, verbose_name=u"域名")
+    domain = models.ForeignKey(Domain, on_delete=models.CASCADE, verbose_name=u"所在域")
     name = models.CharField(max_length=30, verbose_name=u"记录名")
     type = models.CharField(choices=Types.items(), default='A', max_length=10, verbose_name=u"记录类型")
     value = models.CharField(max_length=50, verbose_name=u"记录值")
@@ -58,5 +57,22 @@ class Record(models.Model):
         verbose_name_plural = '记录'
 
     def save(self, *args, **kwargs):
-        self.title = '{}-{}-{}-{}'.format(self.zone, self.name, self.type, self.value)
+        self.title = '{}-{}-{}-{}'.format(self.domain, self.name, self.type, self.value)
         super(Record, self).save(*args, **kwargs)
+
+
+class XfrAcl(models.Model):
+    title = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name=u"全名")
+    domain = models.ForeignKey(Domain, on_delete=models.CASCADE, verbose_name=u"所在域")
+    client = models.CharField(max_length=50, verbose_name=u"记录值")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'xfr列表'
+        verbose_name_plural = 'xfr列表'
+
+    def save(self, *args, **kwargs):
+        self.title = '{}-{}'.format(self.domain, self.client)
+        super(XfrAcl, self).save(*args, **kwargs)
