@@ -21,8 +21,8 @@ class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all().order_by('create_time')
     serializer_class = RecordSerializer
     permission_classes = (IsAdminUser,)
-    filter_fields = ['host', 'data', 'create_time']
-    search_fields = ['host', 'data']
+    filter_fields = ['name', 'value', 'create_time']
+    search_fields = ['name', 'value']
 
 
 class AllDomainViewSet(viewsets.ViewSet):
