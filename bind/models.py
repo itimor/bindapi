@@ -46,7 +46,6 @@ class Record(models.Model):
     minimum = models.IntegerField(null=True, blank=True, verbose_name=u"SOA记录的minimum")
     resp_person = models.CharField(max_length=100, null=True, blank=True, verbose_name=u"域名管理者")
     primary_ns = models.CharField(max_length=100, null=True, blank=True, verbose_name=u"主ns")
-    data_count = models.IntegerField(null=True, blank=True, verbose_name=u"统计")
     tan = models.BooleanField(default=False, verbose_name=u"是否探测")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name=u"创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name=u"更新时间")

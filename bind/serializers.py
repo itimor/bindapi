@@ -18,4 +18,4 @@ class RecordSerializer(serializers.ModelSerializer):
         model = Record
         fields = (
             'url', 'id', 'title', 'zone', 'name', 'type', 'value', 'ttl', 'status', 'mx', 'serial',
-            'refresh', 'retry', 'expire', 'minimum', 'resp_person', 'data_count', 'tan', 'create_time', 'update_time')
+            'refresh', 'retry', 'expire', 'minimum', 'resp_person', 'tan', 'create_time', 'update_time')
