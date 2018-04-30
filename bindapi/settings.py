@@ -60,7 +60,7 @@ WSGI_APPLICATION = 'bindapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'binddns',
+        'NAME': 'bind',
         'USER': 'bind',
         'PASSWORD': '123456',
         'HOST': '118.193.136.206',
