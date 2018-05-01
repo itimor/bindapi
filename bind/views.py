@@ -30,7 +30,7 @@ class RecordViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
 
         domain = request.data['domain']
-        record = Record.objects.filter(domain__name=domain, type='SOA')
+        record = Record.objects.filter(domain__name=domain, type='SOA')[0]
         record.serial = record.serial + 1
         record.save()
         return Response(serializer.data)
@@ -42,7 +42,7 @@ class RecordViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
 
         domain = request.data['domain']
-        record = Record.objects.filter(domain__name=domain, type='SOA')
+        record = Record.objects.filter(domain__name=domain, type='SOA')[0]
         record.serial = record.serial + 1
         record.save()
         return Response(serializer.data)
