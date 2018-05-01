@@ -58,7 +58,6 @@ class Record(models.Model):
 
     def save(self, *args, **kwargs):
         self.title = '{}-{}-{}-{}'.format(self.domain, self.name, self.type, self.value)
-        self.serial = self.serial + 1
         super(Record, self).save(*args, **kwargs)
 
 

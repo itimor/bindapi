@@ -24,6 +24,29 @@ class RecordViewSet(viewsets.ModelViewSet):
     filter_fields = ['domain__name', 'name', 'value', 'create_time']
     search_fields = ['name', 'value']
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        domain = request.data['domain']
+        record = Record.objects.filter(domain__name=domain, type='SOA')
+        record.serial = record.serial + 1
+        record.save()
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=False)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        domain = request.data['domain']
+        record = Record.objects.filter(domain__name=domain, type='SOA')
+        record.serial = record.serial + 1
+        record.save()
+        return Response(serializer.data)
+
 
 class XfrAclViewSet(viewsets.ModelViewSet):
     queryset = XfrAcl.objects.all()
