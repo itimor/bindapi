@@ -52,7 +52,7 @@ class RecordViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
-            domain = instance['domain']
+            domain = instance.domain
             record = Record.objects.filter(domain__name=domain, type='SOA')[0]
             record.serial = record.serial + 1
             record.save()
