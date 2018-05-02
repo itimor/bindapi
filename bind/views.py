@@ -7,6 +7,8 @@ from bind.serializers import DomainSerializer, RecordSerializer, XfrAclSerialize
 from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.permissions import IsAdminUser
+from rest_framework import status
+from django.http import Http404
 
 
 class DomainViewSet(viewsets.ModelViewSet):
@@ -46,6 +48,19 @@ class RecordViewSet(viewsets.ModelViewSet):
         record.serial = record.serial + 1
         record.save()
         return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+        except Http404:
+            pass
+
+        domain = request.data['domain']
+        record = Record.objects.filter(domain__name=domain, type='SOA')[0]
+        record.serial = record.serial + 1
+        record.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class XfrAclViewSet(viewsets.ModelViewSet):
