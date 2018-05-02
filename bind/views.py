@@ -27,21 +27,10 @@ class RecordViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'value']
 
     def create(self, request, *args, **kwargs):
-        try:
-            domain = request.data['domain']
-            record = Record.objects.filter(domain__name=domain, type='SOA')[0]
-            record.serial = record.serial + 1
-            record.save()
-        except:
-            content = {'msg': '域名%s没有SOA记录' % request.data['domain']}
-            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        return Response(serializer.data)
 
-    def update(self, request, *args, **kwargs):
         try:
             domain = request.data['domain']
             record = Record.objects.filter(domain__name=domain, type='SOA')[0]
@@ -51,10 +40,23 @@ class RecordViewSet(viewsets.ModelViewSet):
             content = {'msg': '域名%s没有SOA记录' % request.data['domain']}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=False)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
+
+        try:
+            domain = request.data['domain']
+            record = Record.objects.filter(domain__name=domain, type='SOA')[0]
+            record.serial = record.serial + 1
+            record.save()
+        except:
+            content = {'msg': '域名%s没有SOA记录' % request.data['domain']}
+            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
