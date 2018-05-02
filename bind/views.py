@@ -52,14 +52,13 @@ class RecordViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
+            domain = instance['domain']
+            record = Record.objects.filter(domain__name=domain, type='SOA')[0]
+            record.serial = record.serial + 1
+            record.save()
             self.perform_destroy(instance)
         except Http404:
             pass
-
-        domain = request.data['domain']
-        record = Record.objects.filter(domain__name=domain, type='SOA')[0]
-        record.serial = record.serial + 1
-        record.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
