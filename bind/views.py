@@ -27,10 +27,14 @@ class RecordViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'value']
 
     def create(self, request, *args, **kwargs):
-        domain = request.data['domain']
-        record = Record.objects.filter(domain__name=domain, type='SOA')[0]
-        record.serial = record.serial + 1
-        record.save()
+        try:
+            domain = request.data['domain']
+            record = Record.objects.filter(domain__name=domain, type='SOA')[0]
+            record.serial = record.serial + 1
+            record.save()
+        except:
+            content = {'msg': '域名%s没有SOA记录' % request.data['domain']}
+            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -38,10 +42,14 @@ class RecordViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
-        domain = request.data['domain']
-        record = Record.objects.filter(domain__name=domain, type='SOA')[0]
-        record.serial = record.serial + 1
-        record.save()
+        try:
+            domain = request.data['domain']
+            record = Record.objects.filter(domain__name=domain, type='SOA')[0]
+            record.serial = record.serial + 1
+            record.save()
+        except:
+            content = {'msg': '域名%s没有SOA记录' % request.data['domain']}
+            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=False)
@@ -57,8 +65,9 @@ class RecordViewSet(viewsets.ModelViewSet):
             record.serial = record.serial + 1
             record.save()
             self.perform_destroy(instance)
-        except Http404:
-            pass
+        except:
+            content = {'msg': '域名没有SOA记录'}
+            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -70,7 +79,6 @@ class XfrAclViewSet(viewsets.ModelViewSet):
 
 
 class AllDomainViewSet(viewsets.ViewSet):
-
     def list(self, request):
         allurls = []
         domains = Domain.objects.all()
